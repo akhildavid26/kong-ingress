@@ -37,72 +37,72 @@ Copy and customize these templates for Kong implementation:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: grade-submission
-  namespace: grade-demo
-  annotations:
-    konghq.com/strip-path: "false"
-    konghq.com/plugins: grade-auth, grade-ratelimit    # Your plugin names
-    kubernetes.io/ingress.class: kong
-    konghq.com/methods: "GET, POST"
+ name: <your-ingress-name>
+ namespace: <your-namespace>
+ annotations:
+   konghq.com/strip-path: "false"
+   konghq.com/plugins: <auth-plugin-name>, <ratelimit-plugin-name>    # Plugin names referenced in KongPlugin resources
+   kubernetes.io/ingress.class: kong
+   konghq.com/methods: "GET, POST"  
 spec:
-  ingressClassName: kong
-  rules:
-    - http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: grade-submission-api    # Your service name
-                port:
-                  number: 3000               # Your service port
+ ingressClassName: kong
+ rules:
+   - http:
+       paths:
+         - path: /
+           pathType: Prefix
+           backend:
+             service:
+               name: <your-service-name>   # Name of your K8s Service
+               port:
+                 number: <service-port>    # Port exposed by your Service
 
 # kong-plugins.yaml
 apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
-  name: grade-ratelimit    # Referenced in Ingress annotations
-  namespace: grade-demo
+ name: <ratelimit-plugin-name>     # Must match name in Ingress annotation
+ namespace: <your-namespace>
 config:
-  minute: 10              # Adjust rate limit as needed
-  limit_by: consumer
-  policy: local
+ minute: <requests-per-minute>     # Number of requests allowed per minute
+ limit_by: consumer
+ policy: local
 plugin: rate-limiting
 ---
 apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
-  name: grade-auth        # Referenced in Ingress annotations
-  namespace: grade-demo
+ name: <auth-plugin-name>          # Must match name in Ingress annotation
+ namespace: <your-namespace>
 config:
-  key_names:
-    - apikey             # API key header name
-  hide_credentials: true
+ key_names:
+   - apikey                        # Header name for the API key
+ hide_credentials: true
 plugin: key-auth
 
 # kong-consumer.yaml
 apiVersion: configuration.konghq.com/v1
 kind: KongConsumer
 metadata:
-  name: grade-submission-consumer    # Your consumer name
-  namespace: grade-demo
-username: grade-submission           # Your username
-custom_id: grade-submission-consumer-1  # Your custom ID
+ name: <consumer-name>             # Unique name for this consumer
+ namespace: <your-namespace>
+username: <username>                # Username for this consumer
+custom_id: <custom-id>              # Unique ID for this consumer
 credentials:
-  - user1-apikey                    # Reference to Secret name
+ - <secret-name>                   # Name of the Secret containing the API key
 
 # kong-secret.yaml
 apiVersion: v1
 kind: Secret
 metadata:
-  name: user1-apikey                # Referenced in KongConsumer
-  namespace: grade-demo
-  labels:
-    konghq.com/credential: key-auth
+ name: <secret-name>               # Must match name referenced in KongConsumer
+ namespace: <your-namespace>
+ labels:
+   konghq.com/credential: key-auth
 type: Opaque
 stringData:
-  kongCredType: key-auth
-  key: your-secret-key              # Replace with your desired API key
+ kongCredType: key-auth
+ key: <your-api-key>               # Your chosen API key value
 ```
 
 ### 2. Test API with Kong Security:
