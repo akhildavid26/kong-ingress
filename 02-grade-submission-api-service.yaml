@@ -4,10 +4,8 @@ metadata:
   name: grade-submission-api
   namespace: grade-demo
 spec:
-  type: NodePort  
   selector:
     app: grade-submission
   ports:
     - port: 3000
       targetPort: 3000
-      nodePort: 31000
