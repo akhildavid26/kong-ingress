@@ -118,9 +118,6 @@ curl -X POST http://localhost:<node-port>/grades \
 curl http://localhost:<node-port>/grades -H "apikey: your-secret-key"
 ```
 
-### 3. Common Issues:
-- Ensure Kong is properly installed in your cluster
-- Verify all resources are in the same namespace
-- Check Kong proxy port is correctly configured
-- Verify API key matches the secret value
-```
+## Kubernetes Training
+
+If you found this guide helpful, check out our [Kubernetes Training course](https://kubernetestraining.io/)
