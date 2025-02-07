@@ -1,5 +1,5 @@
 # Kong API Gateway Kubernetes Tutorial
-This repository contains all the code needed to follow along with our YouTube guide: **Kong API Gateway + Kubernetes: Complete Security Tutorial**
+This repository contains all the code needed to follow along with our **YouTube Tutorial**.
 
 ## Part 1: Basic Setup (Without Kong)
 
