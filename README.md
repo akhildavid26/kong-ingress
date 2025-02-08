@@ -63,6 +63,8 @@ kind: KongPlugin
 metadata:
  name: <ratelimit-plugin-name>     # Must match name in Ingress annotation
  namespace: <your-namespace>
+ annotations:
+  kubernetes.io/ingress.class: kong
 config:
  minute: <requests-per-minute>     # Number of requests allowed per minute
  limit_by: consumer
@@ -74,6 +76,8 @@ kind: KongPlugin
 metadata:
  name: <auth-plugin-name>          # Must match name in Ingress annotation
  namespace: <your-namespace>
+ annotations:
+  kubernetes.io/ingress.class: kong
 config:
  key_names:
    - apikey                        # Header name for the API key
@@ -86,6 +90,8 @@ kind: KongConsumer
 metadata:
  name: <consumer-name>             # Unique name for this consumer
  namespace: <your-namespace>
+ annotations:
+  kubernetes.io/ingress.class: kong
 username: <username>                # Username for this consumer
 custom_id: <custom-id>              # Unique ID for this consumer
 credentials:
