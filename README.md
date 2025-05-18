@@ -124,6 +124,6 @@ curl -X POST http://localhost:<port>/grades \
 curl http://localhost:<port>/grades -H "apikey: your-secret-key"
 ```
 
-## Kubernetes Training
+## Become a Cloud and DevOps Engineer
 
-If you found this guide helpful, check out our [Kubernetes Training course](https://kubernetestraining.io/)
+Learn every tool that matters: https://rayanslim.com
