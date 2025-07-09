@@ -14,7 +14,7 @@ spec:
  rules:
    - http:
        paths:
-         - path: /
+         - path: /grades
            pathType: Prefix
            backend:
              service:
